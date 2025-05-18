@@ -18,7 +18,8 @@ class LSTMRegressor(nn.Module):
         self._lstm_block = nn.LSTM(
             input_size=num_features,
             hidden_size=hidden_size,
-            num_layers=num_layers
+            num_layers=num_layers,
+            batch_first=True
         )
 
         self._fc = nn.Sequential()
@@ -39,4 +40,4 @@ class LSTMRegressor(nn.Module):
 
     def forward(self, sequence, city_coords):
         out, *_ = self._lstm_block(sequence)
-        return self._fc(torch.concat([out[-1], city_coords], axis=1))
+        return self._fc(torch.concat([out[:,-1,:], city_coords], axis=1))
