@@ -25,8 +25,6 @@ class WeatherDataset(Dataset):
     def __len__(self):
         return self._total_sequences * self._num_cities
     def __getitem__(self, idx: int):
-        if idx >= len(self):
-            raise IndexError(f"Index {idx} out of range for {self._total_sequences}")
         city_idx = idx // self._total_sequences
         time_idx = idx % self._total_sequences
 
