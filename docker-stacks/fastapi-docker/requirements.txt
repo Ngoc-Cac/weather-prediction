@@ -2,9 +2,10 @@
 fastapi[standard]
 pydantic
 
-# torch stuff for model
-torch
-
 # other sci computing stuff
 numpy
 pandas
+
+# torch stuff for model
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch
