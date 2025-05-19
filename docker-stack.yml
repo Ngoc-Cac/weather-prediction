@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  torch-notebook:
+    image: jupyter/pytorch-notebook:cuda12
+    command: start-notebook.sh --ServerApp.password='' --ServerApp.token=''
+    deploy:
+      replicas: 3
+      placement:
+        constraints: [node.role == worker]
+    ports:
+      - 8888:8888
+    volumes:
+      - ./resource:/home/jovyan/work
+  web:
+    image: trinhngoccac/py-with-fastapi
+    deploy:
+      replicas: 3
+      placement:
+        constraints: [node.role == node.worker]
+    ports:
+      - 8000:80
+    volumes:
+      - ./resource:/home/work
