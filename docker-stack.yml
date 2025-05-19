@@ -3,7 +3,7 @@ version: "3.8"
 services:
   torch-notebook:
     image: trinhngoccac/pytorch-notebook
-    command: start-notebook.sh --ServerApp.password='' --ServerApp.token=''
+    command: start-notebook.sh --ServerApp.password='sha1:57d81e0f255f:4205c21b8e736e244e8677d3758acc9bfdefe977'
     deploy:
       replicas: 3
       placement:
