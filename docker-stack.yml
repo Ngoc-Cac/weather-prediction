@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   torch-notebook:
-    image: jupyter/pytorch-notebook:cuda12
+    image: jupyter/pytorch-notebook
     command: start-notebook.sh --ServerApp.password='' --ServerApp.token=''
     deploy:
       replicas: 3
