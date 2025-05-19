@@ -3,7 +3,7 @@ fastapi[standard]
 pydantic
 
 # torch stuff for model
-# torch
+torch
 
 # other sci computing stuff
 numpy
