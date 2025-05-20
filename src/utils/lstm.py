@@ -37,5 +37,9 @@ class LSTMRegressor(nn.Module):
             )
         self._fc.add_module("out", nn.Linear(fc_hidden_dims[-1] if fc_hidden_dims else hidden_size, out_features))
 
-    def forward(self, sequence):
-        return self._fc(self._lstm_block(sequence)[0][:, -1, :])
+    def forward(self, sequence, hidden_cell_states=None):
+        return self._fc(
+            self._lstm_block(
+                sequence, hidden_cell_states
+            )[0][:, -1, :]
+        )
