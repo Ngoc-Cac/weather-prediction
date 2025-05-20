@@ -27,17 +27,17 @@ class LSTMRegressor(nn.Module):
             self._fc.add_module(str(i),
                 nn.Sequential(
                     nn.Linear(
-                    hidden_size + 2 if i == 0 else fc_hidden_dims[i - 1],
-                    dim
+                        hidden_size if i == 0 else fc_hidden_dims[i - 1],
+                        dim
                     ),
                     nn.BatchNorm1d(dim),
                     activation_fn
                 )
             )
-        if not fc_hidden_dims:
-            fc_hidden_dims = (hidden_size + 2, )
-        self._fc.add_module("out", nn.Linear(fc_hidden_dims[-1], num_features))
+        self._fc.add_module("out", nn.Linear(fc_hidden_dims[-1] if fc_hidden_dims else hidden_size, num_features))
 
-    def forward(self, sequence, city_coords):
-        out, *_ = self._lstm_block(sequence)
-        return self._fc(torch.concat([out[:,-1,:], city_coords], axis=1))
+    def forward(self, sequence):
+        if self.training:
+            return self._fc(self._lstm_block(sequence)[0][:, -1, :])
+        else:
+            return self._fc(self._lstm_block(sequence)[0])
