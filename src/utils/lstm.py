@@ -5,7 +5,8 @@ from torch import nn
 
 class LSTMRegressor(nn.Module):
     def __init__(self,
-        num_features: int,
+        in_features: int,
+        out_features: int,
         hidden_size: int = 512,
         num_layers: int = 2,
         fc_hidden_dims: tuple[int] = (512, 512),
@@ -16,7 +17,7 @@ class LSTMRegressor(nn.Module):
             activation_fn = nn.ReLU()
 
         self._lstm_block = nn.LSTM(
-            input_size=num_features,
+            input_size=in_features,
             hidden_size=hidden_size,
             num_layers=num_layers,
             batch_first=True
@@ -34,10 +35,7 @@ class LSTMRegressor(nn.Module):
                     activation_fn
                 )
             )
-        self._fc.add_module("out", nn.Linear(fc_hidden_dims[-1] if fc_hidden_dims else hidden_size, num_features))
+        self._fc.add_module("out", nn.Linear(fc_hidden_dims[-1] if fc_hidden_dims else hidden_size, out_features))
 
     def forward(self, sequence):
-        if self.training:
-            return self._fc(self._lstm_block(sequence)[0][:, -1, :])
-        else:
-            return self._fc(self._lstm_block(sequence)[0])
+        return self._fc(self._lstm_block(sequence)[0][:, -1, :])

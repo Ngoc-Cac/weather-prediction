@@ -12,13 +12,12 @@ def train_loop(
 
     losses = []
     pbar = tqdm(dataloader, total=len(dataloader))
-    for features_seq, next_seq, city_coords in pbar:
+    for features_seq, next_seq in pbar:
         if use_gpu:
             features_seq = features_seq.cuda()
             next_seq = next_seq.cuda()
-            city_coords = city_coords.cuda()
 
-        prediction = model(features_seq, city_coords)
+        prediction = model(features_seq)
         loss = loss_fn(prediction, next_seq)
 
         optimizer.zero_grad()
@@ -38,13 +37,12 @@ def eval_loop(
     model.eval()
 
     losses = []
-    for features_seq, next_seq, city_coords in test_loader:
+    for features_seq, next_seq in test_loader:
         if use_gpu:
             features_seq = features_seq.cuda()
             next_seq = next_seq.cuda()
-            city_coords = city_coords.cuda()
 
-        prediction = model(features_seq, city_coords)
+        prediction = model(features_seq)
         loss = loss_fn(prediction, next_seq)
 
         losses.append(loss.item())
