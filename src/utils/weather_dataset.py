@@ -29,7 +29,9 @@ class WeatherDataset(Dataset):
         time_idx = idx % self._total_sequences
 
         return (
-            self._features[time_idx : time_idx + self._lag_duration, :, city_idx],
+            torch.concat([
+                self._features[time_idx : time_idx + self._lag_duration, :, city_idx],
+                self._city_coords[city_idx].repeat(self._lag_duration, 1)
+            ], dim=1),
             self._features[time_idx + self._lag_duration, :, city_idx],
-            self._city_coords[city_idx]
         )
