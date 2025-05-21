@@ -24,7 +24,7 @@ def draw_series(
         predictions, color='orange', label='Prediction'
     )
 
-    ax.set_xlabel(xlabel.capitalize())
-    ax.set_ylabel(ylabel.capitalize())
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
     ax.legend()
     return ax
