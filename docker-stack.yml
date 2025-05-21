@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  torch-notebook:
+    image: trinhngoccac/pytorch-notebook
+    command: start-notebook.sh --ServerApp.password='' --ServerApp.token=''
+    deploy:
+      replicas: 3
+      placement:
+        constraints: [node.role == worker]
+    ports:
+      - 8888:8888
+    volumes:
+      - ./resource:/home/jovyan/work/resource
+      - ./src:/home/jovyan/work/src
+
+  web:
+    image: trinhngoccac/py-with-fastapi
+    deploy:
+      replicas: 3
+      placement:
+        constraints: [node.role == worker]
+    ports:
+      - 8000:8000
+    volumes:
+      - ./resource:/home/work/resource
+      - ./src/api:/home/work/api

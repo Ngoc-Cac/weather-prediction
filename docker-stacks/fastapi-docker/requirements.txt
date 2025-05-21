@@ -1,0 +1,10 @@
+# fastapi stuff
+fastapi[standard]
+pydantic
+
+# other sci computing stuff
+numpy
+pandas
+
+# torch stuff for model
+torch
