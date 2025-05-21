@@ -1,0 +1,3 @@
+,humidity,pressure,temperature,wind_direction,wind_speed
+min,0,820.3333333333334,248.4628125,0,0.0
+max,100,1098.5,312.195,360,15.208333333333334
