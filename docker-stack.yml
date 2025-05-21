@@ -24,4 +24,4 @@ services:
       - 8000:80
     volumes:
       - ./resource:/home/work/resource
-      - ./src/app:/home/work/app
+      - ./src/api:/home/work/api
