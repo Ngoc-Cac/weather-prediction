@@ -23,9 +23,9 @@ weather_model.eval()
 app = FastAPI(
     version="0.1.0",
     title="Weather Prediction with LSTM API",
-    summary="",
-    description="",
-    docs_url="/documentation"
+    summary="API for sending weather data to our model and receiving the predictions.",
+    description="Visit /documentation for more information.",
+    redoc_url="/documentation"
 )
 
 
