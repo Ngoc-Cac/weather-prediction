@@ -2,10 +2,10 @@ import torch
 
 from fastapi import FastAPI
 
-from api.load_model import load_checkpoint
+from api.utils import load_checkpoint, normalize_features
 from api.data_models import (
     WeatherSequence,
-    WeatherStats,
+    ModelOutput,
 )
 
 from utils.lstm import LSTMRegressor
@@ -37,7 +37,7 @@ def get_model_architecture():
     return {"model": str(weather_model)}
 
 @app.post("/predict_weather/")
-def predict(date_sequence: WeatherSequence) -> WeatherStats:
+def predict(date_sequence: WeatherSequence) -> ModelOutput:
     """
     Predict the weather statistics of the next day given a sequence
         of weather statistics at the specified location.
@@ -45,15 +45,18 @@ def predict(date_sequence: WeatherSequence) -> WeatherStats:
     Unlike the WeatherStats, this will output unbounded results and thus,
         may be unrealistic.
     """
-    in_features = [[
+    in_features = torch.tensor([[
             stats.humidity, stats.pressure, stats.temperature,
             stats.wind_direction, stats.wind_speed,
-            *date_sequence.city_coords
         ] for stats in date_sequence
-    ]
+    ], dtype=torch.float32)
+    city_coords = torch.tensor(date_sequence.city_coords, dtype=torch.float32)\
+                       .repeat(in_features.shape[0], 1)
+
     with torch.no_grad():
         output = weather_model(
-            torch.tensor(in_features, device=device)
+            torch.concat([normalize_features(in_features), city_coords], dim=1)
+                 .to(device)
                  .unsqueeze(0)
         ).squeeze().cpu()
 
