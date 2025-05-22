@@ -1,0 +1,64 @@
+/* Thêm vào cuối file */
+
+.project-input-container {
+  width: 80%;
+  max-width: 600px;
+  margin: 2rem 0;
+}
+
+.project-input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 2px solid #61dafb;
+  font-size: 1rem;
+  resize: vertical;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+
+.project-input:focus {
+  outline: none;
+  border-color: #4fa8d3;
+  box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.3);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.action-button {
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.prediction-btn {
+  background-color: #61dafb;
+  color: white;
+}
+
+.dashboard-btn {
+  background-color: white;
+  color: #61dafb;
+  border: 2px solid #61dafb;
+}
+
+.action-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.prediction-btn:hover {
+  background-color: #4fa8d3;
+}
+
+.dashboard-btn:hover {
+  background-color: #f0f8ff;
+}
