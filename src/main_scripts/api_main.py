@@ -29,7 +29,7 @@ app = FastAPI(
 )
 
 
-@app.put("/predict/")
+@app.post("/predict_weather/")
 def predict(date_sequence: WeatherSequence) -> WeatherStats:
     """
     Predict the weather statistics of the next day given a sequence
