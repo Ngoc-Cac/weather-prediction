@@ -8,29 +8,34 @@ from pydantic import (
 from typing import (
     Annotated,
     Iterator,
+    TypeAlias
 )
 
+Numeric: TypeAlias = int | float
 
-def _validate_positive(number: int | float):
+
+def _validate_non_neg(number: Numeric):
     if number < 0:
         raise ValueError("Got negative input...")
     return number
     
-def _validate_humidity(humidity: float):
+def _validate_humidity(humidity: Numeric):
     if humidity < 0 or humidity > 100:
         raise ValueError("Humidity must be in range [0, 100]...")
     return humidity
 
-def _validate_wind_dir(wind_direction: float):
+def _validate_wind_dir(wind_direction: Numeric):
     if wind_direction < 0 or wind_direction > 360:
         raise ValueError("Wind direction must be in range [0, 360]...")
     return wind_direction
 
-def _validate_coords(geo_coords: tuple[float, float]):
+def _validate_coords(geo_coords: tuple[Numeric, Numeric]):
+    if len(geo_coords) != 2:
+        raise ValueError("Coordinates must contain exactly two numbers, given as (latitude, longitude)...")
     if abs(geo_coords[0]) > 90:
-        raise ValueError("Latitude coordinates must be in range [-90, 90]")
+        raise ValueError("Latitude coordinates must be in range [-90, 90]...")
     if abs(geo_coords[1]) > 180:
-        raise ValueError("Latitude coordinates must be in range [-180, 180]")
+        raise ValueError("Latitude coordinates must be in range [-180, 180]...")
     return geo_coords
 
 
@@ -38,19 +43,19 @@ class WeatherStats(BaseModel):
     """
     Weather statistics for the current date.
     """
-    humidity: Annotated[float, AfterValidator(_validate_humidity)] =\
+    humidity: Annotated[Numeric, AfterValidator(_validate_humidity)] =\
         Field(description="The humidity in percentage (0 - 100).")
     
-    pressure: Annotated[float, AfterValidator(_validate_positive)] =\
+    pressure: Annotated[Numeric, AfterValidator(_validate_non_neg)] =\
         Field(description="The pressure in hPa.")
     
-    temperature: Annotated[float, AfterValidator(_validate_positive)] =\
+    temperature: Annotated[Numeric, AfterValidator(_validate_non_neg)] =\
         Field(description="The temperature in Kelvins.")
     
-    wind_direction: Annotated[float, AfterValidator(_validate_wind_dir)] =\
+    wind_direction: Annotated[Numeric, AfterValidator(_validate_wind_dir)] =\
         Field(description="The wind direction in meteorological degrees (0 - 360).")
     
-    wind_speed: Annotated[float, AfterValidator(_validate_positive)] =\
+    wind_speed: Annotated[Numeric, AfterValidator(_validate_non_neg)] =\
         Field(description="The wind speed in meters/second (m/s).")
 
 
@@ -58,7 +63,7 @@ class WeatherSequence(BaseModel):
     """
     Sequence of weather statistics for a maximum of seven days at a specified location.
     """
-    city_coords: Annotated[tuple[float, float], AfterValidator(_validate_coords)] =\
+    city_coords: Annotated[tuple[Numeric, Numeric], AfterValidator(_validate_coords)] =\
         Field(description="Coordinates of the location given as (latitude, longitude)")
     
     day_1: WeatherStats = Field(description="The weather statistics of the first day in the sequence.")
