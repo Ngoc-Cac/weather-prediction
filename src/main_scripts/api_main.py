@@ -29,6 +29,13 @@ app = FastAPI(
 )
 
 
+@app.get("/model_architecture/")
+def get_model_architecture():
+    """
+    Get the current predicting model's architecture.
+    """
+    return {"model": str(weather_model)}
+
 @app.post("/predict_weather/")
 def predict(date_sequence: WeatherSequence) -> WeatherStats:
     """
