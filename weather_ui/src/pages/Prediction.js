@@ -131,12 +131,6 @@ function Prediction() {
           >
             Main Page
           </button>
-          <button 
-            className="nav-button dashboard-btn"
-            onClick={() => navigate('/dashboard')} // Đến Dashboard
-          >
-            Dashboard
-          </button>
         </div>
       </nav>
 

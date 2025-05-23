@@ -21,12 +21,6 @@ function App() {
           >
             Prediction
           </button>
-          <button 
-            className="nav-button dashboard-btn"
-            onClick={() => navigate('/dashboard')}
-          >
-            Dashboard
-          </button>
         </div>
       </nav>
 
