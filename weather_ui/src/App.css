@@ -4,7 +4,7 @@
 }
 
 .App-logo {
-  height: 30vmin;
+  height: 20vmin;
   pointer-events: none;
   margin-bottom: 2rem;
   filter: drop-shadow(0 0 10px rgba(97, 218, 251, 0.5));
@@ -61,7 +61,7 @@ html, body {
 
 .App-title {
   font-size: 2.5rem;
-  margin-bottom: 2rem;
+  margin: 0.5rem 0 1rem;
   background: linear-gradient(90deg, #61dafb 0%, #ffffff 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -258,8 +258,8 @@ html, body {
 }
 
 .App-header {
-  margin-top: 80px;
-  min-height: calc(100vh - 80px);
+  margin-top: 60px;
+  min-height: calc(100vh - 60px);
 }
 
 
@@ -289,5 +289,221 @@ html, body {
   .App-header {
     margin-top: 60px;
     min-height: calc(100vh - 60px);
+  }
+}
+
+/* GitHub Button Styles */
+.github-button-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.github-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  background-color: #333;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: 2px solid #444;
+}
+
+.github-button:hover {
+  background-color: #444;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.github-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .github-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .github-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Prediction Page Styles */
+.prediction-page {
+  background: url('/public/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  color: white;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.prediction-container {
+  margin-top: 60px;
+  padding: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.prediction-title {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #61dafb 0%, #a5f0ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+}
+
+.prediction-guide {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: #eee;
+}
+
+.city-selector {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.city-selector label {
+  margin-right: 1rem;
+  font-size: 1.1rem;
+}
+
+.city-selector select {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #61dafb;
+  font-size: 1rem;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.grid-header, .grid-row {
+  display: contents;
+}
+
+.grid-header > div {
+  background: rgba(97, 218, 251, 0.3);
+  padding: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.grid-row > div:first-child {
+  background: rgba(97, 218, 251, 0.2);
+  padding: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.input-grid input {
+  width: 100%;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #61dafb;
+  border-radius: 4px;
+  color: #333;
+}
+
+.predict-button-container {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.predict-button {
+  padding: 1rem 2rem;
+  background: #61dafb;
+  color: #282c34;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.predict-button:hover {
+  background: #4fa8d3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(97, 218, 251, 0.4);
+}
+
+.prediction-result {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  border: 1px solid rgba(97, 218, 251, 0.3);
+}
+
+.prediction-result h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #61dafb;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.result-label {
+  font-weight: bold;
+  color: #61dafb;
+  margin-right: 0.5rem;
+}
+
+.result-value {
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .input-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid-header {
+    display: none;
+  }
+  
+  .grid-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .grid-row > div:first-child {
+    grid-column: 1 / -1;
+  }
+  
+  .result-grid {
+    grid-template-columns: 1fr;
   }
 }
