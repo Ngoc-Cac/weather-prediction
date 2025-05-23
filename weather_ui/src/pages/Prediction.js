@@ -1,23 +1,30 @@
 // src/pages/Prediction.js
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { predictWeather, CITY_COORDINATES } from '../services/weatherAPI';
 import logo from '../logo.svg'; 
 import '../App.css';  
 
-const cities = [
-  "Vancouver", "Portland", "San Francisco", "Seattle", "Los Angeles",
-  "San Diego", "Las Vegas", "Phoenix", "Albuquerque", "Denver",
-  "San Antonio", "Dallas", "Houston", "Kansas City", "Minneapolis",
-  "Saint Louis", "Chicago", "Nashville", "Indianapolis", "Atlanta",
-  "Detroit", "Jacksonville", "Charlotte", "Miami", "Pittsburgh",
-  "Toronto", "Philadelphia", "New York", "Montreal", "Boston",
-  "Beersheba", "Tel Aviv District", "Eilat", "Haifa", "Nahariyya", "Jerusalem"
-];
+const cities = Object.keys(CITY_COORDINATES);
+
+function checkTemp(val) {
+  return val>= -273.15;
+}
+
+function checkHumid(val) {
+  return val>=0 && val<=100;
+}
+function checkWindDirection(val) {
+  return val>=0 && val<=360;
+}
+function checkWindSpeed(val) {
+  return val>=0;
+}
 
 function Prediction() {
   const navigate = useNavigate();
   const [selectedCity, setSelectedCity] = useState('');
-  const [inputData, setInputData] = useState(Array(7).fill().map(() => ({
+  const [inputData, setInputData] = useState(Array(2).fill().map(() => ({
     temperature: '',
     humidity: '',
     pressure: '',
@@ -32,15 +39,82 @@ function Prediction() {
     setInputData(newData);
   };
 
-  const handlePredict = () => {
-    const mockResult = {
-      temperature: "24°C",
-      humidity: "65%",
-      conditions: "Sunny",
-      recommendation: "Perfect weather for outdoor activities"
-    };
-    setPredictionResult(mockResult);
+  const handlePredict = async () => {
+    if (!selectedCity) {
+      alert("Please select a city.");
+      return;
+    }
+
+    // Kiểm tra dữ liệu đầu vào
+    console.log(inputData);
+    
+    const atleastone = ( 
+      (inputData[0].temperature!== "") && (inputData[0].humidity !== "") && (inputData[0].pressure!== "") && 
+      (inputData[0].wind_speed!== "") && (inputData[0].wind_direction!== "")
+    );
+
+    if (!atleastone) {
+      alert("TPlease fill in all fields for at least one day.");
+      return;
+    }
+
+    //temperature
+    if (inputData[0].temperature!=="" && !checkTemp(parseFloat(inputData[0].temperature))){
+      alert("The temperature must non-negative");
+      return;
+    }
+    if (inputData[1].temperature!=="" && !checkTemp(parseFloat(inputData[1].temperature))){
+      alert("The temperature must non-negative");
+      return;
+    }
+
+    //humidity
+    if (inputData[0].humidity!=="" && !checkHumid(parseFloat(inputData[0].humidity))){
+      alert("The humidity must in range 0 to 100");
+      return;
+    }
+    if (inputData[1].humidity!=="" && !checkHumid(parseFloat(inputData[1].humidity))){
+      alert("The humidity must in range 0 to 100");
+      return;
+    }
+
+    //wind direction
+    if (inputData[0].wind_direction!=="" && !checkWindDirection(parseFloat(inputData[0].wind_direction))){
+      alert("The wind direction in meteorological degrees (0 - 360)");
+      return;
+    }
+
+    if (inputData[1].wind_direction!=="" && !checkWindDirection(parseFloat(inputData[1].wind_direction))){
+      alert("The wind direction in meteorological degrees (0 - 360)");
+      return;
+    }
+
+    //wind speed
+    if (inputData[0].wind_speed!=="" && !checkWindSpeed(parseFloat(inputData[0].wind_speed))){
+      alert("The wind speed must non-negative");
+      return;
+    }
+
+    if (inputData[1].wind_speed!=="" && !checkWindSpeed(parseFloat(inputData[1].wind_speed))){
+      alert("The wind speed must non-negative");
+      return;
+    }
+    
+
+    try {
+      const result = await predictWeather(selectedCity, inputData);
+      setPredictionResult({
+        temperature: `${result.temperature}°C`,
+        humidity: `${result.humidity}%`,
+        conditions: "Predicted",
+        recommendation: "Stay prepared!"
+      });
+    } catch (error) {
+      console.error("Prediction error:", error);
+      alert(error.message);
+    }
   };
+
 
   return (
     <div className="prediction-page">
@@ -48,7 +122,7 @@ function Prediction() {
       <nav className="navbar">
         <div className="nav-logo">
           <img src={logo} className="nav-logo-img" alt="Logo" />
-          <span>WeatherAI</span>
+          <span>Weather Prediction with LSTM API</span>
         </div>
         <div className="nav-buttons">
           <button 
@@ -70,7 +144,7 @@ function Prediction() {
         <h1 className="prediction-title">Weather Prediction</h1>
         
         <div className="prediction-guide">
-          <p>Please enter weather data for 7 consecutive days to get accurate prediction:</p>
+          <p>Please enter weather data for 2 consecutive days to get accurate prediction:</p>
         </div>
 
         {/* Dropdown */}
@@ -95,7 +169,7 @@ function Prediction() {
             <div>Temperature (°C)</div>
             <div>Humidity (%)</div>
             <div>Pressure (hPa)</div>
-            <div>Wind Speed (km/h)</div>
+            <div>Wind Speed (m/s)</div>
             <div>Wind Direction (°)</div>
           </div>
           

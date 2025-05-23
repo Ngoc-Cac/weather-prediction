@@ -12,7 +12,7 @@ function App() {
       <nav className="navbar">
         <div className="nav-logo">
           <img src={logo} className="nav-logo-img" alt="Logo" />
-          <span>WeatherAI</span>
+          <span>Weather Prediction with LSTM API</span>
         </div>
         <div className="nav-buttons">
           <button 
@@ -41,7 +41,7 @@ function App() {
             <h2>Overview</h2>
             <p>
   Understanding the critical role of weather forecasting in daily life and the potential of machine learning models and scalable deployment, our team developed the project <strong>“Machine Learning-Based Weather Forecasting on Docker Cluster.”</strong> This research aims to build and evaluate an LSTM-based deep learning model using the
-  <a
+   <a
   href="https://www.kaggle.com/datasets/selfishgene/historical-hourly-weather-data/data"
   target="_blank"
   rel="noopener noreferrer"
