@@ -1,26 +1,94 @@
-/* Thêm vào cuối file */
-
-.project-input-container {
-  width: 80%;
-  max-width: 600px;
-  margin: 2rem 0;
+.App {
+  text-align: center;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.project-input {
-  width: 100%;
-  padding: 1rem;
-  border-radius: 8px;
-  border: 2px solid #61dafb;
-  font-size: 1rem;
-  resize: vertical;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #333;
+.App-logo {
+  height: 20vmin;
+  pointer-events: none;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 0 10px rgba(97, 218, 251, 0.5));
 }
 
-.project-input:focus {
-  outline: none;
-  border-color: #4fa8d3;
-  box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.3);
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 15s linear;
+  }
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.App-header {
+  background: url('/public/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 2rem;
+  filter: drop-shadow(0 0 10px rgba(97, 218, 251, 0.5));
+  position: relative;
+  z-index: 1;
+}
+
+.App-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.App-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.App-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.App-title {
+  font-size: 2.5rem;
+  margin: 0.5rem 0 1rem;
+  background: linear-gradient(90deg, #61dafb 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 10px rgba(97, 218, 251, 0.3);
+  filter: drop-shadow(0 0 10px rgba(97, 218, 251, 0.5));
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .App-features {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .App-title {
+    font-size: 1.8rem;
+  }
 }
 
 .action-buttons {
@@ -61,4 +129,475 @@
 
 .dashboard-btn:hover {
   background-color: #f0f8ff;
+}
+
+.content-container {
+  display: flex;
+  width: 100%;
+  max-width: 1400px; 
+  margin: 3rem auto;
+  gap: 3rem; 
+  align-items: center;
+}
+
+.text-content {
+  flex: 1;
+  padding: 1rem; 
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(97, 218, 251, 0.2);
+}
+
+.text-content h2 {
+  color: #61dafb;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.text-content p {
+  line-height: 1.6;
+  font-size: 0.8rem;
+  text-align: justify;
+}
+
+.image-content {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.project-image {
+  width: 100%; 
+  max-width: 1200px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(97, 218, 251, 0.4);
+  border: 2px solid rgba(97, 218, 251, 0.5);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+  aspect-ratio: 860/460;
+}
+
+.project-image:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 40px rgba(97, 218, 251, 0.6);
+}
+
+.image-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2); 
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+}
+
+/* Navigation Bar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: black;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(97, 218, 251, 0.3);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #61dafb;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-logo-img {
+  height: 40px;
+  width: auto;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-button {
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.nav-button.prediction-btn {
+  background-color: #61dafb;
+  color: #282c34;
+}
+
+.nav-button.dashboard-btn {
+  background-color: transparent;
+  color: #61dafb;
+  border: 2px solid #61dafb;
+}
+
+.nav-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(97, 218, 251, 0.3);
+}
+
+.App-header {
+  margin-top: 60px;
+  min-height: calc(100vh - 60px);
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+  
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+  
+  .nav-logo-img {
+    height: 30px;
+  }
+  
+  .nav-buttons {
+    gap: 0.5rem;
+  }
+  
+  .nav-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .App-header {
+    margin-top: 60px;
+    min-height: calc(100vh - 60px);
+  }
+}
+
+/* GitHub Button Styles */
+.github-button-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.github-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  background-color: #333;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: 2px solid #444;
+}
+
+.github-button:hover {
+  background-color: #444;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.github-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .github-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .github-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Prediction Page Styles */
+.prediction-page {
+  background: url('/public/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-top: 80px; /* Space for fixed navbar */
+}
+
+.prediction-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.prediction-title {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #61dafb 0%, #a5f0ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+}
+
+.prediction-guide {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: #eee;
+}
+
+.city-selector {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.city-selector label {
+  margin-right: 1rem;
+  font-size: 1.1rem;
+  color: #61dafb;
+}
+
+.city-selector select {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #61dafb;
+  font-size: 1rem;
+  color: #333;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); 
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  align-items: center; 
+}
+
+.grid-header, .grid-row {
+  display: contents;
+}
+
+.grid-header > div {
+  background: rgba(97, 218, 251, 0.3);
+  padding: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-row > div:first-child {
+  background: rgba(97, 218, 251, 0.2);
+  padding: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: white;
+}
+
+.input-grid input {
+  width: 100%;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #61dafb;
+  border-radius: 10px;
+  color: #333;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-grid input:focus {
+  outline: none;
+  border-color: #4fa8d3;
+  box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.3);
+}
+
+.grid-row > div:not(:first-child) {
+  display: flex;
+  height: 100%;
+}
+
+.grid-row > div:not(:first-child) input {
+  flex-grow: 1;
+}
+
+.predict-button-container {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.predict-button {
+  padding: 1rem 2rem;
+  background: #61dafb;
+  color: #282c34;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.predict-button:hover {
+  background: #4fa8d3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(97, 218, 251, 0.4);
+}
+
+.predict-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.error-message {
+  color: #ff6b6b;
+  text-align: center;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(255, 0, 0, 0.1);
+  border-left: 3px solid #ff6b6b;
+  border-radius: 4px;
+}
+
+.prediction-result {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  border: 1px solid rgba(97, 218, 251, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.prediction-result h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #61dafb;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.result-label {
+  font-weight: bold;
+  color: #61dafb;
+  margin-right: 0.5rem;
+}
+
+.result-value {
+  color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+  
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+  
+  .nav-logo-img {
+    height: 30px;
+  }
+  
+  .nav-buttons {
+    gap: 0.5rem;
+  }
+  
+  .nav-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .input-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid-header {
+    display: none;
+  }
+  
+  .grid-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .grid-row > div:first-child {
+    grid-column: 1 / -1;
+  }
+  
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .prediction-title {
+    font-size: 1.8rem;
+  }
+}
+
+/* Animation */
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  border: 4px solid rgba(97, 218, 251, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #61dafb;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

@@ -1,27 +1,32 @@
 version: "3.8"
 
 services:
-  torch-notebook:
-    image: trinhngoccac/pytorch-notebook
-    command: start-notebook.sh --ServerApp.password='' --ServerApp.token=''
-    deploy:
-      replicas: 3
-      placement:
-        constraints: [node.role == worker]
-    ports:
-      - 8888:8888
-    volumes:
-      - ./resource:/home/jovyan/work/resource
-      - ./src:/home/jovyan/work/src
-
-  web:
+  fastapi:
     image: trinhngoccac/py-with-fastapi
     deploy:
       replicas: 3
       placement:
-        constraints: [node.role == worker]
+        constraints: [node.labels.service == api_worker]
+    command: fastapi run api/api_main.py
     ports:
       - 8000:8000
     volumes:
-      - ./resource:/home/work/resource
+      - ./resource:/home/resource
+      - ./src/utils:/home/work/utils
       - ./src/api:/home/work/api
+
+  web:
+    image: trinhngoccac/chakra-ui
+    deploy:
+      replicas: 3
+      placement:
+        constraints: [node.labels.service == web_worker]
+    command: bash -c "
+        rm package.json && rm package-lock.json
+        && cp -a /home/weather_ui/. /home/
+        && npm start
+      "
+    ports:
+     - 3000:3000
+    volumes:
+      - ./weather_ui:/home/weather_ui

@@ -1,0 +1,9 @@
+# torch stuff for model training
+torch
+
+# other sci computing stuff
+numpy
+pandas
+
+# visualization tools
+matplotlib
