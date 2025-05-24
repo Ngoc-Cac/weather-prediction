@@ -1,5 +1,9 @@
-FROM jupyter/scipy-notebook
-WORKDIR /home/work
+FROM jupyter/minimal-notebook
 
-RUN python -m pip install --no-cache-dir torch\
-    --index-url https://download.pytorch.org/whl/cpu
+COPY ./requirements.txt requirements.txt
+RUN pip install --upgrade pip
+RUN pip install --progress-bar off --no-cache-dir -r requirements.txt\
+    --extra-index-url https://download.pytorch.org/whl/cpu
+RUN rm requirements.txt
+
+CMD ["tail", "-f", "/dev/null"]
