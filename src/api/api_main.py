@@ -2,7 +2,7 @@ import torch
 
 from fastapi import FastAPI
 
-from api.utils import load_checkpoint, normalize_features
+from api.utils import load_checkpoint, normalize_features, denormalize_features
 from api.data_models import (
     WeatherSequence,
     ModelOutput,
@@ -69,7 +69,8 @@ def predict(date_sequence: WeatherSequence) -> ModelOutput:
             torch.concat([normalize_features(in_features), city_coords], dim=1)
                  .to(device)
                  .unsqueeze(0)
-        ).squeeze().cpu()
+        ).cpu()
+    output = denormalize_features(output).squeeze()
 
     return {
         "humidity" : output[0].item(),
