@@ -1,6 +1,7 @@
 import torch
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from api.utils import load_checkpoint, normalize_features, denormalize_features
 from api.data_models import (
@@ -27,9 +28,6 @@ app = FastAPI(
     description="Visit /documentation for more information.",
     redoc_url="/documentation"
 )
-
-from fastapi.middleware.cors import CORSMiddleware
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], 
