@@ -1,5 +1,5 @@
-FROM node:23-slim
-WORKDIR /home/work
+FROM node:23-bullseye-slim
+WORKDIR /home
 
 RUN npm install @chakra-ui/react @emotion/react
 RUN npm install react-scripts@latest
