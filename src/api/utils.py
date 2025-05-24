@@ -27,3 +27,8 @@ def normalize_features(features: torch.Tensor) -> torch.Tensor:
     repeated_min = _minimums.repeat(features.shape[0], 1)
     repeated_diff = _difference.repeat(features.shape[0], 1)
     return (features - repeated_min) / repeated_diff
+
+def denormalize_features(norm_features: torch.Tensor) -> torch.Tensor:
+    repeated_min = _minimums.repeat(norm_features.shape[0], 1)
+    repeated_diff = _difference.repeat(norm_features.shape[0], 1)
+    return norm_features * repeated_diff + repeated_min
