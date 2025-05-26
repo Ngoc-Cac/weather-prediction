@@ -46,8 +46,8 @@ def _validate_coords(geo_coords: tuple[Numeric, Numeric]):
 class ModelOutput(BaseModel):
     """
     Unbounded predicted values for the next day. These values carry the same
-        semantic with WeatherStats with the exception that they may or may not lie
-        within the allowed value range.
+        semantic with WeatherStats with the exception that they may or may not
+        lie within the allowed value range.
     """
     humidity: Numeric
     pressure: Numeric
