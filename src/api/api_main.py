@@ -1,6 +1,10 @@
 import torch
 
-from fastapi import FastAPI, HTTPException
+
+from fastapi import (
+    FastAPI,
+    HTTPException,
+)
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.config import (
@@ -11,12 +15,16 @@ from api.data_models import (
     ModelOutput,
     WeatherSequence,
 )
+from api.docs import examples
 from api.utils import (
     denormalize_features,
     load_checkpoint,
 )
 
 from utils.lstm import LSTMRegressor
+
+
+from typing import Annotated
 
 
 config = APIConfig(0,
@@ -79,7 +87,9 @@ async def set_model(model_index: int):
     }
 
 @app.post("/predict_weather/")
-async def predict(date_sequence: WeatherSequence) -> ModelOutput:
+async def predict(
+    date_sequence: Annotated[WeatherSequence, examples.predict_example_body]
+) -> ModelOutput:
     """
     Predict the weather statistics of the next day given a sequence
         of weather statistics at the specified location.
