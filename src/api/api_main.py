@@ -45,10 +45,10 @@ app.add_middleware(
 
 
 @app.get('/')
-def get_root(): return {"documentation": "Documentation at /documentation."}
+async def get_root(): return {"documentation": "Documentation at /documentation."}
 
 @app.get("/model_architecture/")
-def get_model_architecture():
+async def get_model_architecture():
     """
     Get the current predicting model's architecture.
     """
@@ -58,7 +58,7 @@ def get_model_architecture():
     }
 
 @app.put("/set_model/{model_index}")
-def set_model(model_index: int):
+async def set_model(model_index: int):
     """
     Set the current predicting model to a new one.
     """
@@ -79,7 +79,7 @@ def set_model(model_index: int):
     }
 
 @app.post("/predict_weather/")
-def predict(date_sequence: WeatherSequence) -> ModelOutput:
+async def predict(date_sequence: WeatherSequence) -> ModelOutput:
     """
     Predict the weather statistics of the next day given a sequence
         of weather statistics at the specified location.
