@@ -3,36 +3,31 @@ import torch
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.utils import (
-    denormalize_features,
-    load_checkpoint,
-    normalize_features,
+from api.config import (
+    APIConfig,
+    MODEL_CONFIGS,
 )
 from api.data_models import (
     WeatherSequence,
     ModelOutput,
 )
+from api.utils import (
+    denormalize_features,
+    load_checkpoint,
+    normalize_features,
+)
 
 from utils.lstm import LSTMRegressor
 
 
-model_configs = [
-    {
-        'checkpoint': '../resource/models/lstm_only/4layer_cp3.tar',
-        'params': {'in_features': 7, 'out_features': 5, 'num_layers': 4, 'fc_hidden_dims': ()},
-    },
-    {
-        'checkpoint': '../resource/models/lstm_mlp/4layer_2mlp_cp4.tar',
-        'params': {'in_features': 7, 'out_features': 5, 'num_layers': 4},
-    },
-]
-current_index = 0
-device = 'gpu' if torch.cuda.is_available() else 'cpu'
-weather_model = load_checkpoint(
-    model_configs[current_index]['checkpoint'],
-    LSTMRegressor(**model_configs[0]['params']),
-    device=device
-).eval()
+
+config = APIConfig(0,
+    load_checkpoint(
+        MODEL_CONFIGS[0]['checkpoint'],
+        LSTMRegressor(**MODEL_CONFIGS[0]['params']),
+        device='gpu' if torch.cuda.is_available() else 'cpu'
+    ).eval()
+)
 
 
 app = FastAPI(
@@ -60,26 +55,29 @@ def get_model_architecture():
     Get the current predicting model's architecture.
     """
     return {
-        "model_index": current_index,
-        "model": str(weather_model),
+        "model_index": config.model_index,
+        "model": str(config.weather_model),
     }
 
 @app.put("/set_model/{model_index}")
 def set_model(model_index: int):
-    global weather_model, current_index
-    if model_index > len(model_configs) - 1:
-        raise HTTPException(status_code=404, detail=f"Model {model_index} not found! There are only {len(model_configs)} models.")
+    """
+    Set the current predicting model to a new one.
+    """
+    if model_index > len(MODEL_CONFIGS) - 1:
+        raise HTTPException(status_code=404, detail=f"Model {model_index} not found! There are only {len(MODEL_CONFIGS)} models.")
     elif model_index < 0:
         raise HTTPException(status_code=400, detail="Cannot process negative model_index!")
-    current_index = model_index
-    weather_model = load_checkpoint(
-        model_configs[current_index]['checkpoint'],
-        LSTMRegressor(**model_configs[current_index]['params']),
-        device=device
+    
+    config.model_index = model_index
+    config.weather_model = load_checkpoint(
+        MODEL_CONFIGS[config.model_index]['checkpoint'],
+        LSTMRegressor(**MODEL_CONFIGS[config.model_index]['params']),
+        device=config.device
     ).eval()
     return {
-        "success": f"Loaded model {current_index} successfully!",
-        "architecture": str(weather_model)
+        "success": f"Loaded model {config.model_index} successfully!",
+        "architecture": str(config.weather_model)
     }
 
 @app.post("/predict_weather/")
@@ -100,9 +98,9 @@ def predict(date_sequence: WeatherSequence) -> ModelOutput:
                        .repeat(in_features.shape[0], 1)
 
     with torch.no_grad():
-        output = weather_model(
+        output = config.weather_model(
             torch.concat([normalize_features(in_features), city_coords], dim=1)
-                 .to(device)
+                 .to(config.device)
                  .unsqueeze(0)
         ).cpu()
     output = denormalize_features(output).squeeze()
