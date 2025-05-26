@@ -14,7 +14,6 @@ from api.data_models import (
 from api.utils import (
     denormalize_features,
     load_checkpoint,
-    normalize_features,
 )
 
 from utils.lstm import LSTMRegressor
@@ -89,19 +88,9 @@ def predict(date_sequence: WeatherSequence) -> ModelOutput:
     Unlike the WeatherStats, this will output unbounded results and thus,
         may be unrealistic.
     """
-    in_features = torch.tensor([[
-            stats.humidity, stats.pressure, stats.temperature,
-            stats.wind_direction, stats.wind_speed,
-        ] for stats in date_sequence
-    ], dtype=torch.float32)
-    city_coords = torch.tensor(date_sequence.city_coords, dtype=torch.float32)\
-                       .repeat(in_features.shape[0], 1)
-
     with torch.no_grad():
         output = config.weather_model(
-            torch.concat([normalize_features(in_features), city_coords], dim=1)
-                 .to(config.device)
-                 .unsqueeze(0)
+            date_sequence.to_tensor().to(config.device).unsqueeze(0)
         ).cpu()
     output = denormalize_features(output).squeeze()
 

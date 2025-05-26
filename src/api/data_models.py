@@ -1,8 +1,12 @@
+import torch
+
 from pydantic import (
     AfterValidator,
     BaseModel,
     Field,
 )
+
+from api.utils import normalize_features
 
 
 from typing import (
@@ -95,3 +99,18 @@ class WeatherSequence(BaseModel):
         for stats in dates:
             if not stats is None:
                 yield stats
+
+    def to_tensor(self):
+        in_features = torch.tensor([[
+                stats.humidity, stats.pressure, stats.temperature,
+                stats.wind_direction, stats.wind_speed,
+            ] for stats in self
+        ], dtype=torch.float32)
+        return torch.concat(
+            [
+                in_features,
+                torch.tensor(self.city_coords, dtype=torch.float32)\
+                     .repeat(in_features.shape[0], 1)
+            ],
+            dim=1
+        )
