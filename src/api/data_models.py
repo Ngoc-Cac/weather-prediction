@@ -6,8 +6,6 @@ from pydantic import (
     Field,
 )
 
-from api.utils import normalize_features
-
 
 from typing import (
     Annotated,
