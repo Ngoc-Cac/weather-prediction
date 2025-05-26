@@ -1,9 +1,6 @@
 from fastapi import Body
 
 
-
-
-
 predict_example_body = Body(
     openapi_examples={
         'simple': {
