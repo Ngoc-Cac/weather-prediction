@@ -8,8 +8,8 @@ from api.config import (
     MODEL_CONFIGS,
 )
 from api.data_models import (
-    WeatherSequence,
     ModelOutput,
+    WeatherSequence,
 )
 from api.utils import (
     denormalize_features,
@@ -17,7 +17,6 @@ from api.utils import (
 )
 
 from utils.lstm import LSTMRegressor
-
 
 
 config = APIConfig(0,
