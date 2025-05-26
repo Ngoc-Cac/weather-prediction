@@ -66,7 +66,7 @@ def set_model(model_index: int):
     if model_index > len(MODEL_CONFIGS) - 1:
         raise HTTPException(status_code=404, detail=f"Model {model_index} not found! There are only {len(MODEL_CONFIGS)} models.")
     elif model_index < 0:
-        raise HTTPException(status_code=400, detail="Cannot process negative model_index!")
+        raise HTTPException(status_code=422, detail="Cannot process negative model_index!")
     
     config.model_index = model_index
     config.weather_model = load_checkpoint(
@@ -90,7 +90,7 @@ def predict(date_sequence: WeatherSequence) -> ModelOutput:
     """
     with torch.no_grad():
         output = config.weather_model(
-            date_sequence.to_tensor().to(config.device).unsqueeze(0)
+            date_sequence.to_tensor().unsqueeze(0).to(config.device)
         ).cpu()
     output = denormalize_features(output).squeeze()
 
