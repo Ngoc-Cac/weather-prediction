@@ -9,3 +9,17 @@ We used a dataset of weather statistics from 2012 to 2017. The dataset comprises
 To realistically simulate a cluster of independent machines, we deployed a Docker cluster of virtual machines using VirtualBox driver. In our demonstration, we created five machines with Docker installed, where four machines are used as slaves and one machine is used as the master.
 
 To deploy the cluster, we first built images that have specific dependencies installed for our API and Web UI. Then, we used deploy a docker stack using the docker-compose file format with two services.
+
+### Our contributors:
+<a href="https://github.com/Ngoc-Cac">
+    <img src="https://avatars.githubusercontent.com/u/144905277?v=4" alt="drawing" width="60">
+</a>
+<a href="https://github.com/dothimykhanh">
+    <img src="https://avatars.githubusercontent.com/u/120184309?v=4" alt="drawing" width="60">
+</a>
+<a href="https://github.com/NguyenTNTh">
+    <img src="https://avatars.githubusercontent.com/u/203326835?v=4" alt="drawing" width="60">
+</a>
+<a href="https://github.com/phiyenng">
+    <img src="https://avatars.githubusercontent.com/u/145342146?v=4" alt="drawing" width="60">
+</a>
