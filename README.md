@@ -9,8 +9,8 @@ We used a dataset of weather statistics from 2012 to 2017. The dataset comprises
 To realistically simulate a cluster of independent machines, we deployed a Docker cluster of virtual machines using VirtualBox driver. In our demonstration, we created five machines with Docker installed, where four machines are used as slaves and one machine is used as the master:
 
 <a name="table1"></a>
+<p align="center">Table 1. Configurations of machines within the Docker Cluster</p>
 <table align="center">
-    <caption>Table 1. Configurations of machines within the Docker Cluster</caption>
     <thead>
         <tr>
             <td>Machine</td>
@@ -40,7 +40,7 @@ To realistically simulate a cluster of independent machines, we deployed a Docke
         </tr>
         <tr>
             <td>M5</td>
-            <td>api-worker2</td>
+            <td>web-worker2</td>
         </tr>
     </tbody>
 </table>
